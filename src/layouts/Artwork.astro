@@ -1,0 +1,25 @@
+---
+export interface ArtworkFrontmatter {
+    title: string;
+    date: Date;
+    image: string;
+    tags: string[];
+}
+
+export interface Props {
+    frontmatter: ArtworkFrontmatter;
+}
+
+import Layout from "./Layout.astro";
+
+const {frontmatter} = Astro.props;
+---
+
+<Layout title={frontmatter.title}>
+    <div>
+        <h2>{frontmatter.title}</h2>
+        <div>
+            <img src={frontmatter.image}>
+        </div>
+    </div>
+</Layout>

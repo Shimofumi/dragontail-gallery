@@ -1,0 +1,42 @@
+---
+import path from 'path';
+import type { MarkdownInstance } from 'astro';
+import Layout from "../layouts/Layout.astro";
+
+const pageTitle: string = "gallery";
+const artworks: MarkdownInstance<Record<string, any>>[] = Object.values(import.meta.glob('./picture/*.md', { eager: true }));
+---
+
+<Layout title={pageTitle}>
+	<div class="grid-wrapper">
+		<div class="gallery-grid">
+			{
+				artworks.map((work) => {
+					const image =work.frontmatter.image;
+					const ext = path.extname(image);
+				    const thumbnail_basename = path.basename(image, ext); // notes
+
+						return (
+						<p class="gallery-piece">
+							<a href={work.url}><img src={`/thumbnails/${thumbnail_basename}_thumb${ext}`}></a>
+							<span class="gallery-title">{work.frontmatter.title}</span>
+						</p>
+					)
+				})
+			}
+			<p class="gallery-piece">作品です</p>
+			<p class="gallery-piece">作品です</p>
+			<p class="gallery-piece">作品です</p>
+			<p class="gallery-piece">作品です</p>
+			<p class="gallery-piece">作品です</p>
+			<p class="gallery-piece">作品です</p>
+			<p class="gallery-piece">作品です</p>
+			<p class="gallery-piece">作品です</p>
+			<p class="gallery-piece">作品です</p>
+			<p class="gallery-piece">作品です</p>
+			<p class="gallery-piece">作品です</p>
+			<p class="gallery-piece">作品です</p>
+		</div>
+		<div class="more-button"><p><a href="">全部見る</a></p></div>
+	</div>
+</Layout>

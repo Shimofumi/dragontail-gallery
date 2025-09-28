@@ -1,0 +1,89 @@
+:root {
+	font-size: 16px;
+}
+
+body {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background-color: #111111;
+	color: #ffffff;
+}
+
+header {
+	width: 100vw;
+	height: 10rem;
+}
+
+header h1 {
+	font-size: 3rem;
+	padding-left: 1rem;
+	margin-bottom: 0;
+}
+
+#test {
+	padding-left: 1rem;
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+}
+
+.gallery-grid {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 1rem;
+}
+
+.gallery-piece {
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: space-around;
+}
+
+.gallery-piece a {
+	background-color: #222222;
+	border: 1px solid #333333;
+}
+
+.gallery-piece img {
+	max-width: 8rem;
+	max-height: 8rem;
+	object-fit: contain;
+}
+
+.more-button {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+}
+
+.more-button p {
+	margin-left: auto;
+}
+
+.grid-wrapper {
+	width: 35rem;
+}
+
+main {
+	min-height: 80vh;
+	margin: 0 1rem;
+	flex: 1;
+}
+
+a {
+	color: #ff88cc;
+}
+
+a:hover {
+	color: #ff5599;
+}
+
+footer {
+	width: 100vw;
+	height: 10rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
