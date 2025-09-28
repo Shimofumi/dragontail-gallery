@@ -1,10 +1,16 @@
 ---
 import path from 'path';
 import type { MarkdownInstance } from 'astro';
+import type { ArtworkFrontmatter } from '../layouts/Artwork.astro';
 import Layout from "../layouts/Layout.astro";
 
 const pageTitle: string = "gallery";
-const artworks: MarkdownInstance<Record<string, any>>[] = Object.values(import.meta.glob('./picture/*.md', { eager: true }));
+const artworks: MarkdownInstance<ArtworkFrontmatter>[] = Object.values(import.meta.glob('./picture/*.md', { eager: true }));
+artworks.sort((a, b) => {
+	const aDate = new Date(a.frontmatter.date);
+	const bDate = new Date(b.frontmatter.date);
+	return bDate.getTime() - aDate.getTime()
+})
 ---
 
 <Layout title={pageTitle}>
@@ -24,19 +30,6 @@ const artworks: MarkdownInstance<Record<string, any>>[] = Object.values(import.m
 					)
 				})
 			}
-			<p class="gallery-piece">作品です</p>
-			<p class="gallery-piece">作品です</p>
-			<p class="gallery-piece">作品です</p>
-			<p class="gallery-piece">作品です</p>
-			<p class="gallery-piece">作品です</p>
-			<p class="gallery-piece">作品です</p>
-			<p class="gallery-piece">作品です</p>
-			<p class="gallery-piece">作品です</p>
-			<p class="gallery-piece">作品です</p>
-			<p class="gallery-piece">作品です</p>
-			<p class="gallery-piece">作品です</p>
-			<p class="gallery-piece">作品です</p>
 		</div>
-		<div class="more-button"><p><a href="">全部見る</a></p></div>
 	</div>
 </Layout>

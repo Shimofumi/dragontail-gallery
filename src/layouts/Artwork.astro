@@ -1,7 +1,7 @@
 ---
 export interface ArtworkFrontmatter {
     title: string;
-    date: Date;
+    date: string;
     image: string;
     tags: string[];
 }
@@ -16,9 +16,11 @@ const {frontmatter} = Astro.props;
 ---
 
 <Layout title={frontmatter.title}>
+    <!-- いつかやる <div class="artwork-navigation"><a>← 533</a><a>531 →</a></div> -->
     <div>
         <h2>{frontmatter.title}</h2>
-        <div>
+        <div><slot /></div>
+        <div class="artwork-wrapper">
             <img src={frontmatter.image}>
         </div>
     </div>

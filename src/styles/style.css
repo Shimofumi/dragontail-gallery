@@ -3,9 +3,6 @@
 }
 
 body {
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
 	background-color: #111111;
 	color: #ffffff;
 }
@@ -42,6 +39,11 @@ header h1 {
 }
 
 .gallery-piece a {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 8rem;
+	height: 8rem;
 	background-color: #222222;
 	border: 1px solid #333333;
 }
@@ -56,20 +58,39 @@ header h1 {
 	width: 100%;
 	display: flex;
 	flex-direction: row;
+	justify-content: center;
+	gap: 1rem;
 }
 
-.more-button p {
-	margin-left: auto;
+.pagination_button_wrapper {
+	width: 5rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	margin: 1rem 0;
 }
 
 .grid-wrapper {
 	width: 35rem;
 }
 
+.artwork-wrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	max-width: 100vw;
+	max-height: 100svh;
+}
+
+.artwork-wrapper img {
+	width: auto;
+	height: 90vh;
+}
+
 main {
-	min-height: 80vh;
 	margin: 0 1rem;
-	flex: 1;
 }
 
 a {
