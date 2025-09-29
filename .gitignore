@@ -21,7 +21,7 @@ pnpm-debug.log*
 .DS_Store
 
 # windowsOS-specific files
-**/Thumbs.db
+Thumbs.db
 
 # jetbrains setting folder
 .idea/
