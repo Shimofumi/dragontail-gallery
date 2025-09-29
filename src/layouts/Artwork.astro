@@ -12,6 +12,7 @@ export interface Props {
 
 import Layout from "./Layout.astro";
 
+
 const {frontmatter} = Astro.props;
 ---
 
@@ -23,5 +24,17 @@ const {frontmatter} = Astro.props;
         <div class="artwork-wrapper">
             <img src={frontmatter.image}>
         </div>
+        <!--ちょっと待てこれは手作業でタグのページ一個一個作ることを意味するのでは？
+        /tags/[tag].astro
+        の実装が先では？-->
+        <div class="artwork-tags">
+            {frontmatter.tags.map(
+                function(tag){
+               return  <a href={`/tags/${tag}`}>#{tag}</a>
+            }
+
+            )} 
+        </div>
     </div>
 </Layout>
+

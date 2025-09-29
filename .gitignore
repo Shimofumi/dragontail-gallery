@@ -20,5 +20,15 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
+# windowsOS-specific files
+**/Thumbs.db
+
 # jetbrains setting folder
 .idea/
+
+# VSCode
+.vscode/
+
+# R18画像を含む可能性があるもの
+public/artworks
+public/thumbnails

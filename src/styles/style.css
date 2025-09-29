@@ -27,7 +27,7 @@ header h1 {
 
 .gallery-grid {
 	display: grid;
-	grid-template-columns: repeat(4, minmax(0, 1fr));
+	grid-template-columns: repeat(6, minmax(0, 1fr));
 	gap: 1rem;
 }
 
@@ -73,7 +73,7 @@ header h1 {
 }
 
 .grid-wrapper {
-	width: 35rem;
+	width: 52rem;
 }
 
 .artwork-wrapper {
@@ -87,6 +87,13 @@ header h1 {
 .artwork-wrapper img {
 	width: auto;
 	height: 90vh;
+}
+
+.artwork-tags {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin: 1rem 0;
 }
 
 main {
