@@ -1,0 +1,76 @@
+---
+import type { MarkdownInstance, Page } from "astro";
+import type { GetStaticPaths } from "astro";
+import Layout from "../../../layouts/Layout.astro";
+
+export interface Props {
+  page: Page;
+  posts: MarkdownInstance<Record<string, any>>[];
+}
+
+export const getStaticPaths = (({paginate}) => {
+  const allPosts : MarkdownInstance<Record<string, any>>[] = Object.values(import.meta.glob("../../picture/*.md", { eager: true }));
+
+  const uniqueTags = [
+    ...new Set(allPosts.map((post) => post.frontmatter.tags).flat()),
+  ] as string[];
+
+  return uniqueTags.flatMap((tag) => {
+    const filteredPosts = allPosts.filter((post) => post.frontmatter.tags.includes(tag));
+    return  paginate( filteredPosts , {
+      params: { tag },
+      pageSize: 2
+    });
+  });
+}) satisfies GetStaticPaths;
+
+const { tag } = Astro.params;
+const { page } = Astro.props;
+
+const size = 3; // Current pageから前後にいくつ表示するか
+const inLowerLimit = (currentPage: number, pageNumber: number) => currentPage - size + 1 <= pageNumber && pageNumber <= currentPage;
+const inUpperLimit = (currentPage: number, pageNumber: number) => pageNumber <= currentPage + size - 1 && pageNumber >= currentPage;
+const inRange = (currentPage: number, pageNumber: number) => inUpperLimit(currentPage, pageNumber) || inLowerLimit(currentPage, pageNumber);
+---
+
+{ tag === undefined ? <></> : (
+<Layout title={`${tag}がついたページ`}>
+  <h1><span>{tag}</span>がついたページ - {page.currentPage}</h1>
+  <ul>
+    {
+      page.data.map(((astronaut) => {
+        return <li><a href={astronaut.url}>{astronaut.frontmatter.title}</a></li>;
+      }))
+    }
+  </ul>
+    <p class="pagination">
+      {page.url.first ? <a href={page.url.first}>First</a> : null}
+      {page.url.prev ? <a href={page.url.prev}>Previous</a> : null}
+        {
+          [... new Array(page.lastPage)].map((_element, index) => {
+              const pageNumber = index + 1;
+              const currentPage = page.currentPage;
+              let flag: number = 0; // 表示するかどうかのフラグ
+              
+			  if (pageNumber === currentPage) {
+				flag = 1 // Current page
+			  } else if (inRange(currentPage, pageNumber)) {
+                flag = 2 // Current page の後 size個
+              } else if ((pageNumber === 1) || (pageNumber === page.lastPage) || (pageNumber === currentPage)) {
+                flag = 2
+              }
+
+              if (flag === 1) {
+				return (<span>{pageNumber}</span>);
+			  } else if (flag === 2) {
+                return (<span><a href={`/tags/${tag}/${pageNumber}`}>{pageNumber}</a></span>);
+              } else {
+                return (<span>.</span>);
+              }
+          })
+        }
+      {page.url.next ? <a href={page.url.next}>Next</a> : null}
+      {page.url.last ? <a href={page.url.last}>Last</a> : null}
+    </p>
+</Layout>
+)}
