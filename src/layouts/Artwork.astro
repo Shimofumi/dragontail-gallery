@@ -22,11 +22,12 @@ const {frontmatter} = Astro.props;
         <h2>{frontmatter.title}</h2>
         <div><slot /></div>
         <div class="artwork-wrapper">
-            <img src={frontmatter.image}>
+            <a href={frontmatter.image} target="_blank">
+                <img src={frontmatter.image}>
+            </a>
+            
         </div>
-        <!--ちょっと待てこれは手作業でタグのページ一個一個作ることを意味するのでは？
-        /tags/[tag].astro
-        の実装が先では？-->
+
         <div class="artwork-tags">
             {frontmatter.tags.map(
                 function(tag){

@@ -123,3 +123,24 @@ footer {
 	gap: 0.5rem;
 	margin: 1rem 0;
 }
+/*-----------index.asstroここから-------------*/
+.age-verification {
+	
+
+	line-height: 1;
+}
+
+.age-verification img {
+	margin-bottom: 20px;
+}
+
+.age-verification h1 {
+	font-size: 3rem;
+	width: 100vw;
+	height: 10rem;
+}
+
+.age-verification > p > a {
+	font-size: 1.5rem;
+}
+/*---------index.astroここまで-------------*/
