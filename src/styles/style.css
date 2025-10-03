@@ -96,6 +96,15 @@ header h1 {
     margin: 1rem 0;
 }
 
+.artwork-navigation {
+  font-size: 0.9em;
+  margin-bottom: 1rem;
+}
+
+.artwork-navigation a {
+  margin: 0 1rem 0 0;
+}
+
 main {
 	margin: 0 1rem;
 }

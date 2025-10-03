@@ -11,13 +11,44 @@ export interface Props {
 }
 
 import Layout from "./Layout.astro";
-
+import type { MarkdownInstance } from "astro";
 
 const {frontmatter} = Astro.props;
+// 全作品を読み込んで日付順にソート
+const allPosts: MarkdownInstance<Record<string, any>>[] = Object.values(
+  import.meta.glob("../pages/picture/*.md", { eager: true })
+);
+
+const sortedPosts = allPosts.sort((a, b) => {
+  return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
+});
+
+// 現在の作品のインデックスを見つける
+const currentIndex = sortedPosts.findIndex(
+  (post) => post.frontmatter.title === frontmatter.title && post.frontmatter.date === frontmatter.date
+);
+
+// 前後の作品を取得
+const prevPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
+const nextPost = currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null;
+
+// URLから番号を抽出する関数
+const getNumberFromUrl = (url: string | undefined) => {
+  if (!url) return '';
+  const match = url.match(/\/picture\/(\d+)/);
+  return match ? match[1] : '';
+};
 ---
 
 <Layout title={frontmatter.title}>
-    <!-- いつかやる <div class="artwork-navigation"><a>← 533</a><a>531 →</a></div> -->
+    <div class="artwork-navigation">
+        {prevPost && (
+            <a href={prevPost.url}>← {getNumberFromUrl(prevPost.url)} {prevPost.frontmatter.title}</a>
+        )}
+        {nextPost && (
+            <a href={nextPost.url}>{getNumberFromUrl(nextPost.url)} {nextPost.frontmatter.title} →</a>
+        )}
+    </div>
     <div>
         <h2>{frontmatter.title}</h2>
         <div><slot /></div>
