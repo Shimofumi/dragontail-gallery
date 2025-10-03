@@ -1,20 +1,57 @@
 ---
 import type { MarkdownInstance } from "astro";
 import Layout from '../layouts/Layout.astro'
-const pageTitle: string = "tags"
+
+const pageTitle: string = "タグ一覧"
 const allPosts : MarkdownInstance<Record<string, any>>[] = Object.values(import.meta.glob("./picture/*.md", { eager: true }));
+
+// 使用頻度をカウント
+const tagCounts = allPosts.flatMap(p => p.frontmatter.tags)
+  .reduce((acc, tag) => { 
+    acc[tag] = (acc[tag] || 0) + 1; 
+    return acc; 
+  }, {} as Record<string, number>);
+
+// 使用頻度順にソート
 const uniqueTags = [
   ...new Set(allPosts.map((post) => post.frontmatter.tags).flat()),
-] as string[];
+].sort((a, b) => tagCounts[b] - tagCounts[a]) as string[];
 ---
 
 <Layout title={pageTitle}>
 	<div>
 		<h2>タグ一覧</h2>
-		{uniqueTags.map(
-			function(tag){
-				return <p><a href={`/tags/${tag}/1`}>#{tag}</a></p>
-			}
-		)}
+		<p>
+			<input type="text" id="tagFilter" placeholder="タグを絞り込み..." />
+		</p>
+		
+		<div class="tags-list">
+			{uniqueTags.map(
+				function(tag){
+					const count = tagCounts[tag];
+					return <p class="tag-item" data-tag={tag}>
+						<a href={`/tags/${tag}/1`}>#{tag}</a> <span class="tag-count">({count})</span>
+					</p>
+				}
+			)}
+		</div>
 	</div>
 </Layout>
+
+<script>
+	const filterInput = document.getElementById('tagFilter') as HTMLInputElement;
+	const tagItems = document.querySelectorAll('.tag-item') as NodeListOf<HTMLElement>;
+	
+	filterInput?.addEventListener('input', (e) => {
+		const filterText = (e.target as HTMLInputElement).value.toLowerCase();
+		
+		tagItems.forEach(item => {
+			const tagName = item.getAttribute('data-tag')?.toLowerCase() || '';
+			if (tagName.includes(filterText)) {
+				item.style.display = '';
+			} else {
+				item.style.display = 'none';
+			}
+		});
+	});
+</script>
