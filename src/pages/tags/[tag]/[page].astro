@@ -2,6 +2,7 @@
 import type { MarkdownInstance, Page } from "astro";
 import type { GetStaticPaths } from "astro";
 import Layout from "../../../layouts/Layout.astro";
+import path from 'path'
 
 export interface Props {
   page: Page;
@@ -19,13 +20,14 @@ export const getStaticPaths = (({paginate}) => {
     const filteredPosts = allPosts.filter((post) => post.frontmatter.tags.includes(tag));
     return  paginate( filteredPosts , {
       params: { tag },
-      pageSize: 2
+      pageSize: 9 //pageSize 何作品ずつ表示するか
     });
   });
 }) satisfies GetStaticPaths;
 
 const { tag } = Astro.params;
 const { page } = Astro.props;
+
 
 const size = 3; // Current pageから前後にいくつ表示するか
 const inLowerLimit = (currentPage: number, pageNumber: number) => currentPage - size + 1 <= pageNumber && pageNumber <= currentPage;
@@ -36,13 +38,26 @@ const inRange = (currentPage: number, pageNumber: number) => inUpperLimit(curren
 { tag === undefined ? <></> : (
 <Layout title={`${tag}がついたページ`}>
   <h1><span>{tag}</span>がついたページ - {page.currentPage}</h1>
-  <ul>
+  
+  <div class="grid-wrapper">
+    <div class="gallery-grid">
     {
-      page.data.map(((astronaut) => {
-        return <li><a href={astronaut.url}>{astronaut.frontmatter.title}</a></li>;
-      }))
+    page.data.map((work) => {
+    const image = work.frontmatter.image;
+    const ext = path.extname(image);
+    const thumbnail_basename = path.basename(image, ext);
+      return (
+      <p class="gallery-piece">
+        <a href={work.url}>
+          <img src={`/thumbnails/${thumbnail_basename}_thumb${ext}`}>
+        </a>
+        <span class="gallery-title">{work.frontmatter.title}</span>
+      </p>
+      )
+    })
     }
-  </ul>
+    </div>
+    </div>
     <p class="pagination">
       {page.url.first ? <a href={page.url.first}>First</a> : null}
       {page.url.prev ? <a href={page.url.prev}>Previous</a> : null}
