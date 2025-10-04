@@ -3,6 +3,7 @@ export interface ArtworkFrontmatter {
     title: string;
     date: string;
     image: string;
+    pages?: string[];
     tags: string[];
 }
 
@@ -69,13 +70,20 @@ const getNumberFromUrl = (url: string | undefined) => {
             </a>
             
         </div>
-
+        <div class="artwork-pages">
+            {
+                frontmatter.pages?.map((page) => {
+                    return (<div><a href={page} target="_blank">
+                        <img src={page}>
+                    </a></div>)
+                })
+            }
+        </div>
         <div class="artwork-tags">
             {frontmatter.tags.map(
                 function(tag){
                return  <a href={`/tags/${tag}/1`}>#{tag}</a>
             }
-
             )} 
         </div>
     </div>

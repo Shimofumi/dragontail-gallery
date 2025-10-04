@@ -88,6 +88,18 @@ header h1 {
 	height: 90vh;
 }
 
+.artwork-pages {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.artwork-pages img {
+	width: auto;
+	height:90vh;
+}
+
 .artwork-tags {
     display: flex;
     flex-direction: row;
