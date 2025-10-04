@@ -32,6 +32,7 @@ Thumbs.db
 # R18画像を含む可能性があるもの
 public/artworks
 public/thumbnails
+public/ogp
 
 # 一時ファイル
 *.tmp
