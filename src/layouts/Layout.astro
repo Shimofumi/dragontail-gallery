@@ -1,5 +1,4 @@
 ---
-import "../styles/style.css";
 export interface Props {
 	title: string;
 	description?: string;
@@ -27,6 +26,7 @@ const pageUrl = url ? `${siteUrl}${url}` : siteUrl;
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<link rel="stylesheet" href="/styles/style.css" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{`Dragontail - ${title}`}</title>
 		<!-- OGP Meta Tags -->
