@@ -19,7 +19,7 @@ export const getStaticPaths = (({paginate}) => {
 	const artWorksParams = artworks.map((work) => {
 		return { work };
 	});
-    return paginate(artWorksParams, { pageSize: 9})
+    return paginate(artWorksParams, { pageSize: 18})
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;

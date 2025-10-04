@@ -27,7 +27,7 @@ export const getStaticPaths = (({paginate}) => {
     const filteredPosts = allPosts.filter((post) => post.frontmatter.tags.includes(tag));
     return  paginate( filteredPosts , {
       params: { tag },
-      pageSize: 9 //pageSize 何作品ずつ表示するか
+      pageSize: 18 //pageSize 何作品ずつ表示するか
     });
   });
 }) satisfies GetStaticPaths;
