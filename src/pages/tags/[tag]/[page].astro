@@ -2,10 +2,7 @@
 import type { MarkdownInstance, Page } from "astro";
 import type { GetStaticPaths } from "astro";
 import Layout from "../../../layouts/Layout.astro";
-<<<<<<< Updated upstream
 import path from 'path'
-=======
->>>>>>> Stashed changes
 import Pagination from "../../../components/Pagination.astro";
 
 export interface Props {
@@ -31,17 +28,7 @@ export const getStaticPaths = (({paginate}) => {
 
 const { tag } = Astro.params;
 const { page } = Astro.props;
-<<<<<<< Updated upstream
-
-
-const size = 3; // Current pageから前後にいくつ表示するか
-const inLowerLimit = (currentPage: number, pageNumber: number) => currentPage - size + 1 <= pageNumber && pageNumber <= currentPage;
-const inUpperLimit = (currentPage: number, pageNumber: number) => pageNumber <= currentPage + size - 1 && pageNumber >= currentPage;
-const inRange = (currentPage: number, pageNumber: number) => inUpperLimit(currentPage, pageNumber) || inLowerLimit(currentPage, pageNumber);
-=======
->>>>>>> Stashed changes
 ---
-
 { tag === undefined ? <></> : (
 <Layout title={`${tag}がついたページ`}>
   <h1><span>{tag}</span>がついたページ - {page.currentPage}</h1>
@@ -63,13 +50,8 @@ const inRange = (currentPage: number, pageNumber: number) => inUpperLimit(curren
       )
     })
     }
-<<<<<<< Updated upstream
     </div>
     </div>
     <Pagination page={page} path={`/tags/${tag}`} />
-=======
-  </ul>
-  <Pagination page={page} path={`/tags/${tag}`} />
->>>>>>> Stashed changes
 </Layout>
 )}
