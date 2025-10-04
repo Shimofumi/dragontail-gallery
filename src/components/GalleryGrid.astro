@@ -19,9 +19,17 @@ const {page} = Astro.props;
                 const ext = path.extname(image);
                 const thumbnailBasename = path.basename(image, ext); // notes
 
+                const tagR18 = frontmatter.tags.includes("R18") ? <span class="tag-R18">R18</span> : <></>;
+                const tagR18G = frontmatter.tags.includes("R18G") ? <span class="tag-R18G">R18G</span> : <></>;
+                const tagMultiple = frontmatter.pages?.length > 0 ? <span class="tag-multiple">□</span> : <></>;
+
                 return (
                     <p class="gallery-piece">
-                        <a href={url}><img src={`/thumbnails/${thumbnailBasename}_thumb${ext}`}></a>
+                        <span class="gallery-body">
+                            <a href={url}><img src={`/thumbnails/${thumbnailBasename}_thumb${ext}`}></a>
+                            <span class="gallery-hint">{tagR18}{tagR18G}</span>
+                            {tagMultiple}
+                        </span>
                         <span class="gallery-title">{frontmatter.title}</span>
                     </p>
                 );
