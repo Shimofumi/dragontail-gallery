@@ -1,0 +1,49 @@
+---
+import path from 'path';
+import type { MarkdownInstance, Page } from "astro";
+import type { GetStaticPaths } from "astro";
+import type { ArtworkFrontmatter } from '../../layouts/Artwork.astro';
+import Layout from "../../layouts/Layout.astro";
+import Pagination from "../../components/Pagination.astro";
+
+const pageTitle: string = "gallery";
+
+export const getStaticPaths = (({paginate}) => {
+  	const artworks: MarkdownInstance<ArtworkFrontmatter>[] = Object.values(import.meta.glob('../picture/*.md', { eager: true }));
+	artworks.sort((a, b) => {
+		const aDate = new Date(a.frontmatter.date);
+		const bDate = new Date(b.frontmatter.date);
+		return bDate.getTime() - aDate.getTime()
+	});
+
+	const artWorksParams = artworks.map((work) => {
+		return { work };
+	});
+    return paginate(artWorksParams, { pageSize: 9})
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<Layout title={pageTitle}>
+	<div class="grid-wrapper">
+		<div class="gallery-grid">
+			{
+				page.data.map((data) => {
+					const frontmatter = data.work.frontmatter;
+					const image = frontmatter.image;
+					const ext = path.extname(image);
+					const thumbnailBasename = path.basename(image, ext); // notes
+
+					return (
+						<p class="gallery-piece">
+							<a href={data.work.url}><img src={`/thumbnails/${thumbnailBasename}_thumb${ext}`}></a>
+							<span class="gallery-title">{frontmatter.title}</span>
+						</p>
+					);
+				})
+			}
+		</div>
+        <Pagination page={page} path="/gallery" />
+	</div>
+</Layout>
