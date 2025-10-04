@@ -4,6 +4,7 @@ import type { GetStaticPaths } from "astro";
 import Layout from "../../../layouts/Layout.astro";
 import path from 'path'
 import Pagination from "../../../components/Pagination.astro";
+import GalleryGrid from "../../../components/GalleryGrid.astro";
 
 export interface Props {
   page: Page;
@@ -32,26 +33,7 @@ const { page } = Astro.props;
 { tag === undefined ? <></> : (
 <Layout title={`${tag}がついたページ`}>
   <h1><span>{tag}</span>がついたページ - {page.currentPage}</h1>
-  
-  <div class="grid-wrapper">
-    <div class="gallery-grid">
-    {
-    page.data.map((work) => {
-    const image = work.frontmatter.image;
-    const ext = path.extname(image);
-    const thumbnail_basename = path.basename(image, ext);
-      return (
-      <p class="gallery-piece">
-        <a href={work.url}>
-          <img src={`/thumbnails/${thumbnail_basename}_thumb${ext}`}>
-        </a>
-        <span class="gallery-title">{work.frontmatter.title}</span>
-      </p>
-      )
-    })
-    }
-    </div>
-    </div>
+    <GalleryGrid page={page} />
     <Pagination page={page} path={`/tags/${tag}`} />
 </Layout>
 )}

@@ -1,0 +1,31 @@
+---
+import type { Page } from 'astro';
+import path from 'path';
+
+export interface Props {
+    page: Page;
+}
+
+const {page} = Astro.props;
+---
+
+<div class="grid-wrapper">
+    <div class="gallery-grid">
+        {
+            page.data.map((data) => {
+                const frontmatter = data.frontmatter ?? data.work.frontmatter;
+                const url = data.url ?? data.work.url;
+                const image = frontmatter.image;
+                const ext = path.extname(image);
+                const thumbnailBasename = path.basename(image, ext); // notes
+
+                return (
+                    <p class="gallery-piece">
+                        <a href={url}><img src={`/thumbnails/${thumbnailBasename}_thumb${ext}`}></a>
+                        <span class="gallery-title">{frontmatter.title}</span>
+                    </p>
+                );
+            })
+        }
+    </div>
+</div>

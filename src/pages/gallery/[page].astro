@@ -1,10 +1,10 @@
 ---
-import path from 'path';
 import type { MarkdownInstance, Page } from "astro";
 import type { GetStaticPaths } from "astro";
 import type { ArtworkFrontmatter } from '../../layouts/Artwork.astro';
 import Layout from "../../layouts/Layout.astro";
 import Pagination from "../../components/Pagination.astro";
+import GalleryGrid from "../../components/GalleryGrid.astro";
 
 const pageTitle: string = "gallery";
 
@@ -26,24 +26,6 @@ const { page } = Astro.props;
 ---
 
 <Layout title={pageTitle}>
-	<div class="grid-wrapper">
-		<div class="gallery-grid">
-			{
-				page.data.map((data) => {
-					const frontmatter = data.work.frontmatter;
-					const image = frontmatter.image;
-					const ext = path.extname(image);
-					const thumbnailBasename = path.basename(image, ext); // notes
-
-					return (
-						<p class="gallery-piece">
-							<a href={data.work.url}><img src={`/thumbnails/${thumbnailBasename}_thumb${ext}`}></a>
-							<span class="gallery-title">{frontmatter.title}</span>
-						</p>
-					);
-				})
-			}
-		</div>
-        <Pagination page={page} path="/gallery" />
-	</div>
+	<GalleryGrid page={page} />
+    <Pagination page={page} path="/gallery" />
 </Layout>
