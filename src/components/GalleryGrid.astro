@@ -21,7 +21,7 @@ const {page} = Astro.props;
 
                 const tagR18 = frontmatter.tags.includes("R18") ? <span class="tag-R18">R18</span> : <></>;
                 const tagR18G = frontmatter.tags.includes("R18G") ? <span class="tag-R18G">R18G</span> : <></>;
-                const tagMultiple = frontmatter.pages?.length > 0 ? <span class="tag-multiple">□</span> : <></>;
+                const tagMultiple = frontmatter.additionalImages?.length > 0 ? <span class="tag-multiple">□</span> : <></>;
 
                 return (
                     <p class="gallery-piece">
