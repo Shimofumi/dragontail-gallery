@@ -12,8 +12,19 @@ export interface Props {
 
 import Layout from "./Layout.astro";
 import type { MarkdownInstance } from "astro";
+import path from 'path';
+
 
 const {frontmatter} = Astro.props;
+
+// OGP用の画像パス
+const ext = path.extname(frontmatter.image);
+const basename = path.basename(frontmatter.image, ext);
+const ogImage = `/ogp/${basename}_ogp${ext}`;
+
+// OGP用のURL
+const ogUrl = Astro.url.pathname;
+
 // 全作品を読み込んで日付順にソート
 const allPosts: MarkdownInstance<Record<string, any>>[] = Object.values(
   import.meta.glob("../pages/picture/*.md", { eager: true })
@@ -40,7 +51,7 @@ const getNumberFromUrl = (url: string | undefined) => {
 };
 ---
 
-<Layout title={frontmatter.title}>
+<Layout title={frontmatter.title} image={ogImage} url={ogUrl}>
     <div class="artwork-navigation">
         {prevPost && (
             <a href={prevPost.url}>← {getNumberFromUrl(prevPost.url)} {prevPost.frontmatter.title}</a>
