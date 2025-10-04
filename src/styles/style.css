@@ -53,6 +53,46 @@ header h1 {
 	object-fit: contain;
 }
 
+.gallery-body {
+	position:relative;
+}
+
+.gallery-body > .gallery-hint, .gallery-body > .tag-multiple {
+	position: absolute;
+	padding: 0.2rem;
+}
+
+.gallery-hint {
+	left: 0;
+	top: -0.5rem;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	gap: 0.5rem;
+}
+
+.tag-R18, .tag-R18G, .tag-multiple {
+	display: inline-block;
+	text-shadow:1px 1px 0 #FFF, -1px -1px 0 #FFF,
+              -1px 1px 0 #FFF, 1px -1px 0 #FFF,
+              0px 1px 0 #FFF,  0-1px 0 #FFF,
+              -1px 0 0 #FFF, 1px 0 0 #FFF;
+}
+
+.tag-R18 {
+	color: #900;
+}
+
+.tag-R18G {
+	color: #039;
+}
+
+.tag-multiple {
+	right: 0;
+	bottom: 0;
+	color: #000;
+}
+
 .more-button {
 	width: 100%;
 	display: flex;
