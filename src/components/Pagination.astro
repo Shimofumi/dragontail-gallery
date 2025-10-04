@@ -1,0 +1,44 @@
+---
+import type { Page } from 'astro';
+
+export interface Props {
+    page: Page;
+    path: string;
+}
+
+const {page, path} = Astro.props;
+
+const size = 2; // Current pageから前後にいくつ表示するか
+const inLowerLimit = (currentPage: number, pageNumber: number) => currentPage - size <= pageNumber && pageNumber <= currentPage;
+const inUpperLimit = (currentPage: number, pageNumber: number) => pageNumber <= currentPage + size && pageNumber >= currentPage;
+const inRange = (currentPage: number, pageNumber: number) => inUpperLimit(currentPage, pageNumber) || inLowerLimit(currentPage, pageNumber);
+---
+<p class="pagination">
+    {page.url.first ? <a href={page.url.first}>First</a> : null}
+    {page.url.prev ? <a href={page.url.prev}>Previous</a> : null}
+    {
+        [... new Array(page.lastPage)].map((_element, index) => {
+            const pageNumber = index + 1;
+            const currentPage = page.currentPage;
+            let flag: number = 0; // 表示するかどうかのフラグ
+            
+            if (pageNumber === currentPage) {
+            flag = 1 // Current page
+            } else if (inRange(currentPage, pageNumber)) {
+            flag = 2 // Current page の後 size個
+            } else if ((pageNumber === 1) || (pageNumber === page.lastPage)) {
+            flag = 2
+            }
+
+            if (flag === 1) {
+            return (<span>{pageNumber}</span>);
+            } else if (flag === 2) {
+            return (<span><a href={`${path}/${pageNumber}`}>{pageNumber}</a></span>);
+            } else {
+            return (<span>.</span>);
+            }
+        })
+    }
+    {page.url.next ? <a href={page.url.next}>Next</a> : null}
+    {page.url.last ? <a href={page.url.last}>Last</a> : null}
+</p>
