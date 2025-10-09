@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/Artwork.astro
-title: ""
+title: "顔だけ描くやつ"
 date: "2025-10-05"
 image: "/artworks/0511kaodakekakuyatsu.jpg"
-tags: []
+tags: ["顔だけ描くやつ","リンバスカンパニー","ハルスベリヤ","ヘイミル・ロゥ","アークナイツ"]
 ---
 

@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/Artwork.astro
-title: ""
+title: "ぷにうか"
 date: "2025-10-05"
 image: "/artworks/0465puniuka.jpg"
-tags: []
+tags: ["ぷにうか","よそのこ","伺か","Classical_Fan_Fiction","午後の日","Tooth and Nail","ヘイミル・ロゥ","かんたん絵","ドラゴンガール"]
 ---
 

@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/Artwork.astro
-title: ""
+title: "ワンドロ"
 date: "2025-10-05"
 image: "/artworks/0477sussurro.jpg"
-tags: []
+tags: ["アークナイツ","ススーロ","ケモミミ"]
 ---
 

@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/Artwork.astro
-title: ""
+title: "すちーむぱんく風衣装捏造"
 date: "2025-10-05"
 image: "/artworks/0492Steam_Vamp_2.jpg"
-tags: []
+tags: ["う゛ぁんぱいあちゃんねる","伺か","よそのこ","桂樹美月姫","聖光院カーラ"]
 ---
 

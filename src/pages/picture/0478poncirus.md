@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/Artwork.astro
-title: ""
+title: "ぽんしらす"
 date: "2025-10-05"
 image: "/artworks/0478poncirus.jpg"
-tags: []
+tags: ["アークナイツ","ポンシラス"]
 ---
 

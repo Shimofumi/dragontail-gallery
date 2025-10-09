@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/Artwork.astro
-title: ""
+title: "GGちゃん"
 date: "2025-10-05"
 image: "/artworks/0480goldenglow.jpg"
-tags: []
+tags: ["アークナイツ","ゴールデングロー","ケモミミ"]
 ---
 
