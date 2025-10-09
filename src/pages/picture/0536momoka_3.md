@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/Artwork.astro
-title: ""
+title: "ﾓﾓｶﾁｬﾝ"
 date: "2025-10-05"
 image: "/artworks/0536momoka_3.png"
-tags: []
+tags: ["ピンクのでかいメイドさん","大井道桃華","伺か"]
 ---
 
