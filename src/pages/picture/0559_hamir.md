@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/Artwork.astro
-title: ""
+title: "わからされ"
 date: "2025-10-05"
 image: "/artworks/0559_hamir.png"
-tags: []
+tags: ["R18","ヘイミル・ロゥ","調教","バイブ","つの","ドラゴンガール","うちのこ"]
 ---
 

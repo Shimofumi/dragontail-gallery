@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/Artwork.astro
-title: ""
+title: "肉棒先生ヒロインズ"
 date: "2025-10-05"
 image: "/artworks/0548_nikubou.png"
-tags: []
+tags: ["えちえち本番ランド","ササキ","リナ"]
 ---
 

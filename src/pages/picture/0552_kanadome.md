@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/Artwork.astro
-title: ""
+title: "ｶﾅﾄﾞﾒｻﾝ"
 date: "2025-10-05"
 image: "/artworks/0552_kanadome.png"
-tags: []
+tags: ["うちのこ","カナドメ","ケモミミ","伺か"]
 ---
 

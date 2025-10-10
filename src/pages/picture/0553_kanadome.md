@@ -1,8 +1,9 @@
 ---
 layout: ../../layouts/Artwork.astro
-title: ""
+title: "おしゃぶりｶﾅﾄﾞﾒｻﾝ"
 date: "2025-10-05"
 image: "/artworks/0553_kanadome.png"
-tags: []
+additionalImages: ["/artworks/0553_kanadome_3.png"]
+tags: ["R18","フェラ","ハート目","うちのこ","カナドメ","ケモミミ","伺か","セラスク","お気に入り"]
 ---
 

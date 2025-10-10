@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/Artwork.astro
-title: ""
+title: "春田"
 date: "2025-10-05"
 image: "/artworks/0545_springfield.png"
-tags: []
+tags: ["ドールズフロントライン","スプリングフィールド"]
 ---
 

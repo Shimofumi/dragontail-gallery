@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/Artwork.astro
-title: ""
+title: "パラチノ"
 date: "2025-10-05"
 image: "/artworks/0582paratino.png"
-tags: []
+tags: ["ハルスベリヤ","パラチノ","おじさん"]
 ---
 

@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/Artwork.astro
-title: ""
+title: "へーちゃん"
 date: "2025-10-05"
 image: "/artworks/0572Hamir.png"
-tags: []
+tags: ["ヘイミル・ロゥ","バニーガール", "伺か", "ドラゴンガール", "うちのこ", "つの", "オリジナル"]
 ---
 
