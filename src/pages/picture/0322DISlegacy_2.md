@@ -1,10 +1,10 @@
 ---
 layout: ../../layouts/Artwork.astro
 title: "オトナス"
-date: "2025-10-05"
+date: "2022-11-12"
 image: "/artworks/0322DISlegacy_2.jpg"
 additionalImages: ["/artworks/0322DISlegacy_3.jpg"]
-tags: ["DIS:Legacy", "オトナス・ナスン・ソラヌム","なすーん", "ドラゴンガール"]
+tags: ["DISLegacy", "オトナス・ナスン・ソラヌム","なすーん", "ドラゴンガール"]
 ---
 
 DIS:legacyをやれ

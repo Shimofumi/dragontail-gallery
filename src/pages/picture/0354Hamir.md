@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Artwork.astro
 title: "ヘイミル・ロゥ"
-date: "2025-10-05"
+date: "2023-05-04"
 image: "/artworks/0354Hamir.jpg"
 tags: ["ヘイミル・ロゥ", "伺か", "ドラゴンガール", "うちのこ", "つの", "オリジナル"]
 ---

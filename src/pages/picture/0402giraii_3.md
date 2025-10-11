@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Artwork.astro
 title: "ギライ公"
-date: "2025-10-05"
+date: "2023-11-01"
 image: "/artworks/0402giraii_3.jpg"
 tags: ["ハルスベリヤ","ギライ公","イェーケムーザ・マフムード・ギライ・ムーニャ・ベイ・カラ＝ハン・スレ・ベイレ"]
 ---

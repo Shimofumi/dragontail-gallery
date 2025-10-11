@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Artwork.astro
 title: "サイハさん"
-date: "2025-10-05"
+date: "2025-09-13"
 image: "/artworks/0578saiha.png"
 tags: ["よそのこ","裂角の龍族サイハ","ドラゴンガール","つの"]
 ---

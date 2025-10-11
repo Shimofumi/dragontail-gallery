@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Artwork.astro
 title: "だぶるぴーすワルファリン"
-date: "2025-10-05"
+date: "2024-07-01"
 image: "/artworks/0451Warfarin.jpg"
 tags: ["アークナイツ","ワルファリン","かんたん絵"]
 ---

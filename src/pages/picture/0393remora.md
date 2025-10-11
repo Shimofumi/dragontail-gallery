@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Artwork.astro
 title: "攫い返した"
-date: "2025-10-05"
+date: "2023-10-13"
 image: "/artworks/0393remora.jpg"
 tags: ["よそのこ","甘味の魔女","天使と悪魔の関係性のやつ","こども四神","つの","お気に入り"]
 ---

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Artwork.astro
 title: "お口えっち"
-date: "2025-10-05"
+date: "2025-09-07"
 image: "/artworks/0575karamama.png"
 tags: ["R18","フェラ","う゛ぁんぱいあちゃんねる","伺か","よそのこ","カーラ母","お気に入り"]
 ---

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Artwork.astro
 title: "Witch of Summer"
-date: "2025-10-05"
+date: "2023-11-11"
 image: "/artworks/0411summerwitch_2_3.jpg"
 additionalImages: ["/artworks/0411summerwitch_2.jpg"]
 tags: ["よそのこ","Witch of Summer","お気に入り"]

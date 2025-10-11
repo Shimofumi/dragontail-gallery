@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Artwork.astro
 title: "アンジェリーナ"
-date: "2025-10-05"
+date: "2024-05-26"
 image: "/artworks/0436angelina_2.jpg"
 tags: ["アークナイツ","ギルベルタ","エンドフィールド","ケモミミ"]
 ---

@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/Artwork.astro
 title: "ドラナ"
-date: "2025-10-05"
+date: "2023-11-12"
 image: "/artworks/0412donako.jpg"
-tags: ["DIS:Legacy","ドラナ","ドラゴンガール","つの"]
+tags: ["DISLegacy","ドラナ","ドラゴンガール","つの"]
 ---
 

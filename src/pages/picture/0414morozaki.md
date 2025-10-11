@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Artwork.astro
 title: "もろざき"
-date: "2025-10-05"
+date: "2023-11-14"
 image: "/artworks/0414morozaki.jpg"
 tags: ["伺か","よそのこ","師崎","お気に入り"]
 ---

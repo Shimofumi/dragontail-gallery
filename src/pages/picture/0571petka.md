@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Artwork.astro
 title: "ペトカちゃん"
-date: "2025-10-05"
+date: "2025-08-31"
 image: "/artworks/0571petka.png"
 tags: ["ペトカ・ベルグレイヴ","ハルスベリヤ"]
 ---

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Artwork.astro
 title: "「海で一番強い生き物」ちゃん"
-date: "2025-10-05"
+date: "2024-08-07"
 image: "/artworks/0463puniuka_3.jpg"
 tags: ["うちのこ","伺か","フリーシェル","オリジナル","「海で一番強い生き物」ちゃん","モルスキェ・オコ","ぷにうか"]
 ---
