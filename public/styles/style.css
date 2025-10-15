@@ -233,3 +233,13 @@ footer {
 		font-size: 0.9em;
 	}
 /*----------tags.astroの絞り込み関連ここまで-----*/
+
+/*-----------contact.astroここから-----*/
+.email-display {
+	font-size: 1.2rem;
+	margin: 1.5rem 0;
+}
+.email-display strong {
+	color: #ff88cc;
+}
+/*-----------contact.astroここまで-----*/

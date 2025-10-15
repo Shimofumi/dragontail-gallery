@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+const pageTitle = "連絡先";
+---
+
+<Layout title={pageTitle}>
+	<div class="contact-page">
+		<h2>連絡先</h2>
+		
+		<p>ご質問やご連絡は以下のメールアドレスまでお願いします。</p>
+		
+		<p class="email-display">
+			<strong id="email-address"></strong>
+		</p>
+		
+		<h3>注意事項</h3>
+		<ul>
+			<p>どのような種類のメッセージも通常3日以内に返答を行うようにしています。返信が不要である場合はその旨をお伝えください。
+             <br>
+            それ以上の期間返信がない場合はメーラー側の不備が考えられます。
+            <br>
+            そのような場合はお手数ですが他の手段で直接連絡を行ってくださいますようお願いします。
+            </p>
+		</ul>
+	</div>
+    <div>
+        <h3>そのほか</h3>
+        <u1>
+            <>サイト名: <strong>Dragontail</strong> (https://dragontail.monster)
+            <br>
+            管理者: <strong>しもふみ</strong>
+            <br>
+            <a href="https://ukadon.shillest.net/@Shimofumi">Mastodonアカウント</a> | <a href="https://twitter.com/Shimofumi">Twitter</a> | <a href="https://skeb.jp/@Shimofumi">Skeb</a>
+            </p>
+        </u1>
+    </div>
+</Layout>
+
+<script>
+	const user = 'contact';
+	const domain = 'dragontail.monster';
+	const emailElement = document.getElementById('email-address');
+	if (emailElement) {
+		emailElement.textContent = `${user}@${domain}`;
+	}
+</script>
