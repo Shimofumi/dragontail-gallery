@@ -14,13 +14,14 @@ header {
 header h1 {
 	font-size: 3rem;
 	padding-left: 1rem;
-	margin-top: 0;
+	margin-bottom: 0;
 }
 
 .header-navigation {
 	margin-top: 1rem;
 	display: flex;
 	flex-direction: row;
+	align-items: flex-end;
 	gap: 1rem;
 }
 
