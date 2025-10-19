@@ -33,6 +33,7 @@ Thumbs.db
 public/artworks
 public/thumbnails
 public/ogp
+public/downloads
 
 # 一時ファイル
 *.tmp

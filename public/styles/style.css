@@ -18,7 +18,7 @@ header h1 {
 }
 
 .header-navigation {
-	margin-top: 1rem;
+	margin-top: 0;
 	display: flex;
 	flex-direction: row;
 	align-items: flex-end;
@@ -276,3 +276,58 @@ footer {
 	margin: 0.5rem 0;
 }
 /*---------- downloads/list.astro ここまで ----------*/
+
+/*---------- downloads/個別ページ ----------*/
+.download-page {
+	max-width: 800px;
+}
+
+.download-category-label {
+	color: #999;
+	font-size: 0.9rem;
+	margin: -0.5rem 0 2rem 0;
+}
+
+.download-page section {
+	margin: 2rem 0;
+}
+
+.download-page h3 {
+	border-bottom: 1px solid #666;
+	padding-bottom: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+.download-preview img {
+	max-width: 100%;
+	height: auto;
+	border: 1px solid #666;
+}
+
+.download-files ul {
+	list-style: none;
+	padding-left: 0;
+}
+
+.download-files li {
+	margin: 0.5rem 0;
+	padding-left: 1.5rem;
+	position: relative;
+}
+
+.download-files li::before {
+	content: "📦";
+	position: absolute;
+	left: 0;
+}
+
+.download-usage code {
+	background: #333;
+	padding: 0.2rem 0.4rem;
+	border-radius: 3px;
+}
+
+.download-terms ul {
+	padding-left: 1.5rem;
+}
+/*---------- downloads/個別ページ ここまで ----------*/
