@@ -10,13 +10,20 @@ const pageTitle: string = "gallery";
 
 export const getStaticPaths = (({paginate}) => {
   	const artworks: MarkdownInstance<ArtworkFrontmatter>[] = Object.values(import.meta.glob('../picture/*.md', { eager: true }));
-	artworks.sort((a, b) => {
+	
+	// R18/R18Gタグを持つ作品を除外
+	const sfwArtworks = artworks.filter(work => {
+		const tags = work.frontmatter.tags || [];
+		return !tags.includes("R18") && !tags.includes("R18G");
+	});
+	
+	sfwArtworks.sort((a, b) => {
 		const aDate = new Date(a.frontmatter.date);
 		const bDate = new Date(b.frontmatter.date);
 		return bDate.getTime() - aDate.getTime()
 	});
 
-	const artWorksParams = artworks.map((work) => {
+	const artWorksParams = sfwArtworks.map((work) => {
 		return { work };
 	});
     return paginate(artWorksParams, { pageSize: 18})

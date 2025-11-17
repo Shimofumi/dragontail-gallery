@@ -15,8 +15,10 @@ import Layout from "./Layout.astro";
 import type { MarkdownInstance } from "astro";
 import path from 'path';
 
-
 const {frontmatter} = Astro.props;
+
+// 現在の作品がNSFWかどうか判定
+const isNSFW = frontmatter.tags.includes("R18") || frontmatter.tags.includes("R18G");
 
 // OGP用の画像パス
 const ext = path.extname(frontmatter.image);
@@ -26,12 +28,20 @@ const ogImage = `/ogp/${basename}_ogp${ext}`;
 // OGP用のURL
 const ogUrl = Astro.url.pathname;
 
-// 全作品を読み込んで日付順にソート
+// 全作品を読み込む
 const allPosts: MarkdownInstance<Record<string, any>>[] = Object.values(
   import.meta.glob("../pages/picture/*.md", { eager: true })
 );
 
-const sortedPosts = allPosts.sort((a, b) => {
+// 現在の作品と同じカテゴリ（SFW or NSFW）の作品のみフィルタリング
+const filteredPosts = allPosts.filter(post => {
+  const postTags = post.frontmatter.tags || [];
+  const postIsNSFW = postTags.includes("R18") || postTags.includes("R18G");
+  return postIsNSFW === isNSFW;
+});
+
+// 日付順にソート
+const sortedPosts = filteredPosts.sort((a, b) => {
   return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
 });
 
@@ -52,7 +62,7 @@ const getNumberFromUrl = (url: string | undefined) => {
 };
 ---
 
-<Layout title={frontmatter.title} image={ogImage} url={ogUrl}>
+<Layout title={frontmatter.title} image={ogImage} url={ogUrl} isNSFW={isNSFW}>
     <div class="artwork-navigation">
         {prevPost && (
             <a href={prevPost.url}>← {getNumberFromUrl(prevPost.url)} {prevPost.frontmatter.title}</a>
@@ -68,7 +78,6 @@ const getNumberFromUrl = (url: string | undefined) => {
             <a href={frontmatter.image} target="_blank">
                 <img src={frontmatter.image}>
             </a>
-            
         </div>
         <div class="artwork-pages">
             {
@@ -82,10 +91,11 @@ const getNumberFromUrl = (url: string | undefined) => {
         <div class="artwork-tags">
             {frontmatter.tags.map(
                 function(tag){
-               return  <a href={`/tags/${tag}/1`}>#{tag}</a>
-            }
+                    // NSFWページならNSFWタグへ、SFWページならSFWタグへリンク
+                    const tagPath = isNSFW ? `/nsfw-gallery/tags/${tag}/1` : `/tags/${tag}/1`;
+                    return <a href={tagPath}>#{tag}</a>
+                }
             )} 
         </div>
     </div>
 </Layout>
-

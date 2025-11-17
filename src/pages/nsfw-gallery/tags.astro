@@ -1,0 +1,63 @@
+---
+import type { MarkdownInstance } from "astro";
+import Layout from '../../layouts/Layout.astro'
+
+const pageTitle: string = "タグ一覧 (NSFW)"
+const allPosts : MarkdownInstance<Record<string, any>>[] = Object.values(import.meta.glob("../picture/*.md", { eager: true }));
+
+// R18/R18Gタグを持つ作品のみ
+const nsfwPosts = allPosts.filter(post => {
+	const tags = post.frontmatter.tags || [];
+	return tags.includes("R18") || tags.includes("R18G");
+});
+
+// 使用頻度をカウント
+const tagCounts = nsfwPosts.flatMap(p => p.frontmatter.tags)
+  .reduce((acc, tag) => { 
+    acc[tag] = (acc[tag] || 0) + 1; 
+    return acc; 
+  }, {} as Record<string, number>);
+
+// 使用頻度順にソート
+const uniqueTags = [
+  ...new Set(nsfwPosts.map((post) => post.frontmatter.tags).flat()),
+].sort((a, b) => tagCounts[b] - tagCounts[a]) as string[];
+---
+
+<Layout title={pageTitle} isNSFW={true}>
+	<div>
+		<h2>タグ一覧 (NSFW)</h2>
+		<p>
+			<input type="text" id="tagFilter" placeholder="タグを絞り込み..." />
+		</p>
+		
+		<div class="tags-list">
+			{uniqueTags.map(
+				function(tag){
+					const count = tagCounts[tag];
+					return <p class="tag-item" data-tag={tag}>
+						<a href={`/nsfw-gallery/tags/${tag}/1`}>#{tag}</a> <span class="tag-count">({count})</span>
+					</p>
+				}
+			)}
+		</div>
+	</div>
+</Layout>
+
+<script>
+	const filterInput = document.getElementById('tagFilter') as HTMLInputElement;
+	const tagItems = document.querySelectorAll('.tag-item') as NodeListOf<HTMLElement>;
+	
+	filterInput?.addEventListener('input', (e) => {
+		const filterText = (e.target as HTMLInputElement).value.toLowerCase();
+		
+		tagItems.forEach(item => {
+			const tagName = item.getAttribute('data-tag')?.toLowerCase() || '';
+			if (tagName.includes(filterText)) {
+				item.style.display = '';
+			} else {
+				item.style.display = 'none';
+			}
+		});
+	});
+</script>

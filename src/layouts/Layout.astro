@@ -4,17 +4,17 @@ export interface Props {
 	description?: string;
 	image?: string;
 	url?: string;
+	isNSFW?: boolean;  // 追加
 }
 
-const { title, description, image, url } = Astro.props;
+const { title, description, image, url, isNSFW = false } = Astro.props;
 
 // サイトの基本情報
 const siteName = "Dragontail";
 const siteUrl = "https://dragontail.monster";
-const defaultDescription = "ドラゴンガールとケモミミが好きな絵描き、しもふみさんによるイラストサイト。オリジナルも二次創作も。全年齢から成人向けまで。";
-const defaultImage = `${siteUrl}/yakinasu_ogp.png`; // デフォルト画像
+const defaultDescription = "ドラゴンガールとケモミミが好きな絵描き、しもふみさんによるイラストサイト。オリジナルも二次創作も。";
+const defaultImage = `${siteUrl}/yakinasu_ogp.png`;
 
-// ページごとの情報（なければデフォルトを使用）
 const pageDescription = description || defaultDescription;
 const pageImage = image ? `${siteUrl}${image}` : defaultImage;
 const pageUrl = url ? `${siteUrl}${url}` : siteUrl;
@@ -40,18 +40,26 @@ const pageUrl = url ? `${siteUrl}${url}` : siteUrl;
 	</head>
 	<body>
 		<header>
-			<div class="header-navigation"><h1><a href="/gallery/1">Dragontail</a></h1><a href="/gallery/1">ギャラリー</a><a href="/downloads/list">配布物</a></div>
+			<div class="header-navigation">
+				<h1><a href={isNSFW ? "/nsfw-gallery/gallery/1" : "/gallery/1"}>Dragontail</a></h1>
+				<a href={isNSFW ? "/nsfw-gallery/gallery/1" : "/gallery/1"}>ギャラリー</a>
+				<a href="/downloads/list">配布物</a>
+				{isNSFW && <span style="color: #f66; font-weight: bold;">18+</span>}
+			</div>
 			<div id="test">
-				<p><a href="/gallery/1">[新着]</a></p>
-				<p><a href="/tags">[タグ一覧]</a></p>
+				<p><a href={isNSFW ? "/nsfw-gallery/gallery/1" : "/gallery/1"}>[新着]</a></p>
+				<p><a href={isNSFW ? "/nsfw-gallery/tags" : "/tags"}>[タグ一覧]</a></p>
+				{isNSFW && <p><a href="/gallery/1">[SFWに戻る]</a></p>}
 			</div>
 		</header>
 		<main>
 			<slot />
 		</main>
 		<footer>
-			<p><a href="/">index</a> | <a href="/contact">[連絡先]</a></p>
-			<p>©2025 しもふみ</p>
+			<p>
+        <a href={isNSFW ? "/nsfw-gallery/" : "/"}>index</a> | <a href="/contact">[連絡先]</a>
+    </p>
+    <p>©2025 しもふみ</p>
 		</footer>
 	</body>
 </html>

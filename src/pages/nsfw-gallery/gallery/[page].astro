@@ -1,0 +1,38 @@
+---
+import type { MarkdownInstance, Page } from "astro";
+import type { GetStaticPaths } from "astro";
+import type { ArtworkFrontmatter } from '../../../layouts/Artwork.astro';
+import Layout from "../../../layouts/Layout.astro";
+import Pagination from "../../../components/Pagination.astro";
+import GalleryGrid from "../../../components/GalleryGrid.astro";
+
+const pageTitle: string = "NSFW Gallery";
+
+export const getStaticPaths = (({paginate}) => {
+  	const artworks: MarkdownInstance<ArtworkFrontmatter>[] = Object.values(import.meta.glob('../../picture/*.md', { eager: true }));
+	
+	// R18/R18Gタグを持つ作品のみ
+	const nsfwArtworks = artworks.filter(work => {
+		const tags = work.frontmatter.tags || [];
+		return tags.includes("R18") || tags.includes("R18G");
+	});
+	
+	nsfwArtworks.sort((a, b) => {
+		const aDate = new Date(a.frontmatter.date);
+		const bDate = new Date(b.frontmatter.date);
+		return bDate.getTime() - aDate.getTime()
+	});
+
+	const artWorksParams = nsfwArtworks.map((work) => {
+		return { work };
+	});
+    return paginate(artWorksParams, { pageSize: 18})
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<Layout title={pageTitle} isNSFW={true}>
+	<GalleryGrid page={page} />
+    <Pagination page={page} path="/nsfw-gallery/gallery" />
+</Layout>
