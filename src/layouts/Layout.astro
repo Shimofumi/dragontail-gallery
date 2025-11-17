@@ -28,7 +28,13 @@ const pageUrl = url ? `${siteUrl}${url}` : siteUrl;
 		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
 		<link rel="stylesheet" href="/styles/style.css" />
 		<meta name="generator" content={Astro.generator} />
+		<!-- RSS Feed -->
+		<link rel="alternate" type="application/rss+xml" 
+        title={isNSFW ? "Dragontail NSFW RSS" : "Dragontail RSS"} 
+        href={isNSFW ? "/nsfw-rss.xml" : "/rss.xml"} />
+		
 		<title>{`Dragontail - ${title}`}</title>
+		
 		<!-- OGP Meta Tags -->
 		<meta property="og:site_name" content={siteName} />
 		<meta property="og:title" content={`${siteName} - ${title}`} />
@@ -56,10 +62,12 @@ const pageUrl = url ? `${siteUrl}${url}` : siteUrl;
 			<slot />
 		</main>
 		<footer>
-			<p>
-        <a href={isNSFW ? "/nsfw-gallery/" : "/"}>index</a> | <a href="/contact">[連絡先]</a>
+    <p>
+        <a href={isNSFW ? "/nsfw-gallery/" : "/"}>index</a> | 
+        <a href="/contact">[連絡先]</a> | 
+        <a href={isNSFW ? "/nsfw-rss.xml" : "/rss.xml"}>[RSS]</a>
     </p>
     <p>©2025 しもふみ</p>
-		</footer>
+</footer>
 	</body>
 </html>
