@@ -39,19 +39,19 @@ const pageUrl = url ? `${siteUrl}${url}` : siteUrl;
 		
 	</head>
 	<body>
-		<header>
-			<div class="header-navigation">
-				<h1><a href={isNSFW ? "/nsfw-gallery/gallery/1" : "/gallery/1"}>Dragontail</a></h1>
-				<a href={isNSFW ? "/nsfw-gallery/gallery/1" : "/gallery/1"}>ギャラリー</a>
-				<a href="/downloads/list">配布物</a>
-				{isNSFW && <span style="color: #f66; font-weight: bold;">18+</span>}
-			</div>
-			<div id="test">
-				<p><a href={isNSFW ? "/nsfw-gallery/gallery/1" : "/gallery/1"}>[新着]</a></p>
-				<p><a href={isNSFW ? "/nsfw-gallery/tags" : "/tags"}>[タグ一覧]</a></p>
-				{isNSFW && <p><a href="/gallery/1">[SFWに戻る]</a></p>}
-			</div>
-		</header>
+	<header>
+    <div class="header-navigation">
+        <h1><a href={isNSFW ? "/nsfw-gallery/gallery/1" : "/gallery/1"}>Dragontail</a></h1>
+        <a href={isNSFW ? "/nsfw-gallery/gallery/1" : "/gallery/1"}>ギャラリー</a>
+        <a href={isNSFW ? "/nsfw-downloads/list" : "/downloads/list"}>配布物</a>
+        {isNSFW && <span style="color: #f66; font-weight: bold;">18+</span>}
+    </div>
+    <div id="test">
+        <p><a href={isNSFW ? "/nsfw-gallery/gallery/1" : "/gallery/1"}>[新着]</a></p>
+        <p><a href={isNSFW ? "/nsfw-gallery/tags" : "/tags"}>[タグ一覧]</a></p>
+        {isNSFW && <p><a href="/gallery/1">[SFWに戻る]</a></p>}
+    </div>
+	</header>
 		<main>
 			<slot />
 		</main>
