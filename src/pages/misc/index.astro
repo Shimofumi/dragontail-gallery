@@ -1,0 +1,70 @@
+---
+import type { MarkdownInstance } from "astro";
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle: string = "そのほか";
+
+// misc/内の記事を読み込み
+const allPosts: MarkdownInstance<Record<string, any>>[] = Object.values(
+    import.meta.glob('./*.{md,mdx}', { eager: true })
+);
+
+// 日付順にソート（新しい順）
+const sortedPosts = allPosts.sort((a, b) => {
+    return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
+});
+
+// カテゴリ別に分類
+const gamesPosts = sortedPosts.filter(post => post.frontmatter.category === 'games');
+const articlesPosts = sortedPosts.filter(post => post.frontmatter.category === 'articles');
+---
+
+<Layout title={pageTitle}>
+    <div class="misc-page">
+        <h2>そのほか</h2>
+
+        {gamesPosts.length > 0 && (
+            <section class="misc-section">
+                <h3>■ おすすめゲーミング</h3>
+                <div class="games-list">
+                    {gamesPosts.map(post => (
+                        <div class="game-item">
+                            {post.frontmatter.banner && (
+                                <a href={post.frontmatter.externalLink || post.url} target={post.frontmatter.externalLink ? "_blank" : "_self"} rel={post.frontmatter.externalLink ? "noopener noreferrer" : ""}>
+                                    <img src={post.frontmatter.banner} alt={post.frontmatter.title} class="game-banner" />
+                                </a>
+                            )}
+                            <div class="game-info">
+                                <h4><a href={post.url}>{post.frontmatter.title}</a></h4>
+                                {post.frontmatter.description && (
+                                    <p class="game-description">{post.frontmatter.description}</p>
+                                )}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+        )}
+
+        {articlesPosts.length > 0 && (
+            <section class="misc-section">
+                <h3>■ 記事</h3>
+                <ul class="articles-list">
+                    {articlesPosts.map(post => (
+                        <li>
+                            <a href={post.url}>{post.frontmatter.title}</a>
+                            <span class="article-date">({post.frontmatter.date})</span>
+                            {post.frontmatter.description && (
+                                <span class="article-description"> - {post.frontmatter.description}</span>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            </section>
+        )}
+
+        {allPosts.length === 0 && (
+            <p>まだ記事がありません。</p>
+        )}
+    </div>
+</Layout>

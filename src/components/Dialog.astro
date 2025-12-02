@@ -1,0 +1,18 @@
+---
+export interface Props {
+    character: string;
+    icon: string;
+}
+
+const { character, icon } = Astro.props;
+---
+
+<div class="dialog-box">
+    <img src={icon} class="dialog-icon" alt={character} />
+    <div class="dialog-content">
+        <div class="dialog-name">{character}</div>
+        <div class="dialog-text">
+            <slot />
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+---
+export interface ArticleFrontmatter {
+    title: string;
+    date: string;
+    category: 'games' | 'articles';
+    banner?: string;
+    description?: string;
+    externalLink?: string;  // itch、Steamなどの外部リンク
+}
+
+export interface Props {
+    frontmatter: ArticleFrontmatter;
+}
+
+import Layout from "./Layout.astro";
+
+const {frontmatter} = Astro.props;
+
+// OGP用の画像パス
+const ogImage = frontmatter.banner || '/yakinasu_ogp.png';
+
+// OGP用のURL
+const ogUrl = Astro.url.pathname;
+
+// カテゴリの日本語表記
+const categoryLabel = frontmatter.category === 'games' ? 'ゲーム紹介' : '記事';
+---
+
+<Layout title={frontmatter.title} image={ogImage} url={ogUrl}>
+    <div class="article-page">
+        <article>
+            <header class="article-header">
+                <p class="article-category">{categoryLabel}</p>
+                <h2>{frontmatter.title}</h2>
+                <p class="article-date">{frontmatter.date}</p>
+            </header>
+
+            {frontmatter.banner && (
+                <div class="article-banner">
+                    <img src={frontmatter.banner} alt={frontmatter.title} />
+                </div>
+            )}
+
+            <div class="article-content">
+                <slot />
+            </div>
+
+            <footer class="article-footer">
+                <p><a href="/misc/">← そのほか一覧に戻る</a></p>
+            </footer>
+        </article>
+    </div>
+</Layout>
