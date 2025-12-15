@@ -35,6 +35,7 @@ public/thumbnails
 public/ogp
 public/downloads
 public/nsfw-downloads
+public/misc
 
 # 一時ファイル
 *.tmp
