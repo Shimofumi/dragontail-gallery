@@ -1,0 +1,68 @@
+---
+import Tettougafu from "../../layouts/Tettougafu.astro";
+
+// パス内のファイル名部分だけ URL エンコードする
+function enc(path: string): string {
+  return path
+    .split("/")
+    .map((seg) => encodeURIComponent(seg))
+    .join("/");
+}
+
+const BASE = "/tettougafu/omake/";
+
+type Track = {
+  title: string;
+  file: string;
+};
+
+const tracks: Track[] = [
+  { title: "boni",                                       file: BASE + "boni.mp3" },
+  { title: "CAPITAINE NEMO",                             file: BASE + "CAPITAINE NEMO.mp3" },
+  { title: "CHESSMEN'S JIG",                             file: BASE + "CHESSMEN'S JIG.mp3" },
+  { title: "dance for wolves",                           file: BASE + "dance for wolves.mp3" },
+  { title: "fanfare",                                    file: BASE + "fanfare.mp3" },
+  { title: "magmapick",                                  file: BASE + "magmapick.mp3" },
+  { title: "nuptial flight",                             file: BASE + "nuptial flight.mp3" },
+  { title: "nutsin",                                     file: BASE + "nutsin.mp3" },
+  { title: "PROBATION",                                  file: BASE + "PROBATION.mp3" },
+  { title: "rocky load in the dark",                     file: BASE + "rockyloadinthedark.wav" },
+  { title: "sakai",                                      file: BASE + "sakai.mp3" },
+  { title: "syntax",                                     file: BASE + "syntax.mp3" },
+  { title: "アルマダ前哨戦",                             file: BASE + "アルマダ前哨戦.mp3" },
+  { title: "ゾウさんの自由意志は誰にも止められない",     file: BASE + "ゾウさんの自由意志は誰にも止められない.mp3" },
+  { title: "トライバルフーテン",                         file: BASE + "トライバルフーテン.mp3" },
+  { title: "という夢を見たのよ",                         file: BASE + "という夢を見たのよ.mp3" },
+  { title: "天祐",                                       file: BASE + "天祐.mp3" },
+  { title: "香水の道",                                   file: BASE + "香水の道.mp3" },
+  { title: "冬薔薇",                                     file: BASE + "冬薔薇.mp3" },
+];
+---
+
+<Tettougafu>
+  <div class="notice-box">
+    <p>このページは竹槍さんの音楽配布サイト「鉄踏楽府」の代理公開ページです。</p>
+    <p>しもふみ（dragontail.monster）が竹槍さんより委託を受け、管理・公開しています。</p>
+    <p>掲載楽曲の著作権はすべて竹槍さんに帰属します。</p>
+  </div>
+
+  <div class="terms-box">
+    <h2>利用規約</h2>
+    <p>商用・非商用を問わず、どなた様も無料でご利用いただけます。</p>
+    <p>但し著作権を放棄しておりません。</p>
+    <p>ご利用の際には必ずダウンロード元を明記してください。</p>
+  </div>
+
+  <div class="track-list">
+    {tracks.map((track) => (
+      <div class="track">
+        <h2>{track.title}</h2>
+        <audio controls preload="none" src={enc(track.file)}></audio>
+      </div>
+    ))}
+  </div>
+
+  <div class="download-section">
+    <a href="/tettougafu/musics.zip" download>全曲入りzip</a>（一部は前奏とループ部分に分かれています。）
+  </div>
+</Tettougafu>

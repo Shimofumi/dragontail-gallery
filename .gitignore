@@ -37,6 +37,9 @@ public/downloads
 public/nsfw-downloads
 public/misc
 
+# 代理公開コンテンツ
+public/tettougafu
+
 # 一時ファイル
 *.tmp
 *.swp
