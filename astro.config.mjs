@@ -48,6 +48,9 @@ export default defineConfig({
                 if (page.includes('/nsfw-downloads/')) return false;
                 if (page.includes('/nsfw-rss.xml')) return false;
 
+                // タグページを除外（インデックス不要）
+                if (page.includes('/tags/') || page.endsWith('/tags')) return false;
+
                 // NSFW作品ページを除外
                 const pagePath = new URL(page).pathname;
                 return !nsfwUrls.some(url => pagePath.includes(url));

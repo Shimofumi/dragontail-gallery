@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /nsfw-gallery/
 Disallow: /nsfw-downloads/
+Disallow: /tags/
 
 Sitemap: https://dragontail.monster/sitemap-index.xml
