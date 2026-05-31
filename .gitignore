@@ -45,3 +45,6 @@ public/tettougafu
 *.swp
 structure.txt
 
+# claude
+CLAUDE.MD
+.claude/
