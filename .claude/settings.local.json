@@ -3,7 +3,8 @@
     "allow": [
       "Bash(wc:*)",
       "Bash(npm run build:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "PowerShell(Get-ChildItem \"e:\\\\Github\\\\dragontail-gallery\\\\public\\\\artworks\\\\\" | ForEach-Object { $_.BaseName } | Sort-Object | Out-String -Width 200)"
     ]
   }
 }
