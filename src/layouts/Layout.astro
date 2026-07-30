@@ -4,12 +4,10 @@ export interface Props {
 	description?: string;
 	image?: string;
 	url?: string;
-	isNSFW?: boolean;  // 追加
 }
 
-const { title, description, image, url, isNSFW = false } = Astro.props;
+const { title, description, image, url } = Astro.props;
 
-// サイトの基本情報
 const siteName = "Dragontail";
 const siteUrl = "https://dragontail.monster";
 const defaultDescription = "ドラゴンガールとケモミミが好きな絵描き、しもふみさんによるイラストサイト。オリジナルも二次創作も。";
@@ -29,12 +27,10 @@ const pageUrl = url ? `${siteUrl}${url}` : siteUrl;
 		<link rel="stylesheet" href="/styles/style.css" />
 		<meta name="generator" content={Astro.generator} />
 		<!-- RSS Feed -->
-		<link rel="alternate" type="application/rss+xml" 
-        title={isNSFW ? "Dragontail NSFW RSS" : "Dragontail RSS"} 
-        href={isNSFW ? "/nsfw-rss.xml" : "/rss.xml"} />
-		
+		<link rel="alternate" type="application/rss+xml" title="Dragontail RSS" href="/rss.xml" />
+
 		<title>{`Dragontail - ${title}`}</title>
-		
+
 		<!-- OGP Meta Tags -->
 		<meta property="og:site_name" content={siteName} />
 		<meta property="og:title" content={`${siteName} - ${title}`} />
@@ -42,21 +38,19 @@ const pageUrl = url ? `${siteUrl}${url}` : siteUrl;
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content={pageUrl} />
 		<meta property="og:image" content={pageImage} />
-		
+
 	</head>
 	<body>
 	<header>
     <div class="header-navigation">
-        <h1><a href={isNSFW ? "/nsfw-gallery/gallery/1" : "/gallery/1"}>Dragontail</a></h1>
-        <a href={isNSFW ? "/nsfw-gallery/gallery/1" : "/gallery/1"}>ギャラリー</a>
-        <a href={isNSFW ? "/nsfw-downloads/list" : "/downloads/list"}>配布物</a>
+        <h1><a href="/gallery/1">Dragontail</a></h1>
+        <a href="/gallery/1">ギャラリー</a>
+        <a href="/downloads/list">配布物</a>
         <a href="/misc/">そのほか</a>
-        {isNSFW && <span style="color: #f66; font-weight: bold;">18+</span>}
     </div>
     <div id="test">
-        <p><a href={isNSFW ? "/nsfw-gallery/gallery/1" : "/gallery/1"}>[新着]</a></p>
-        <p><a href={isNSFW ? "/nsfw-gallery/tags" : "/tags"}>[タグ一覧]</a></p>
-        {isNSFW && <p><a href="/gallery/1">[SFWに戻る]</a></p>}
+        <p><a href="/gallery/1">[新着]</a></p>
+        <p><a href="/tags">[タグ一覧]</a></p>
     </div>
 	</header>
 		<main>
@@ -64,9 +58,9 @@ const pageUrl = url ? `${siteUrl}${url}` : siteUrl;
 		</main>
 		<footer>
     <p>
-        <a href={isNSFW ? "/nsfw-gallery/" : "/"}>index</a> | 
-        <a href="/contact">[連絡先]</a> | 
-        <a href={isNSFW ? "/nsfw-rss.xml" : "/rss.xml"}>[RSS]</a>
+        <a href="/">index</a> |
+        <a href="/contact">[連絡先]</a> |
+        <a href="/rss.xml">[RSS]</a>
     </p>
     <p>©2025 しもふみ</p>
 </footer>

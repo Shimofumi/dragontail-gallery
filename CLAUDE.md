@@ -6,6 +6,18 @@
 
 ---
 
+## NSFW コンテンツの分離について
+
+**NSFW 作品（R18/R18G タグ）および炯炯イネズ名義のコンテンツは、すべて別サイト [kekesha.com](https://kekesha.com) に移行済み。**
+
+- 新サイトのソースは `E:\Github\kekesha\`（Astro プロジェクト）
+- このリポジトリ（dragontail-gallery）には NSFW ギャラリー・NSFW ダウンロードページは存在しない
+- `/picture/*.md` に NSFW 作品の MD ファイルは残存しているが（URL は維持）、ギャラリーやサイトマップには出現しない
+- 健全側（dragontail.monster）から kekesha.com へのリンクは一切置かない
+- kekesha.com から dragontail.monster へのリンクも一切置かない
+
+---
+
 ## ディレクトリ構成
 
 ```

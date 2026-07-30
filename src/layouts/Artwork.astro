@@ -17,7 +17,7 @@ import path from 'path';
 
 const {frontmatter} = Astro.props;
 
-// 現在の作品がNSFWかどうか判定
+// 現在の作品がNSFWかどうか判定（前後ナビのフィルタ用）
 const isNSFW = frontmatter.tags.includes("R18") || frontmatter.tags.includes("R18G");
 
 // OGP用の画像パス
@@ -33,7 +33,7 @@ const allPosts: MarkdownInstance<Record<string, any>>[] = Object.values(
   import.meta.glob("../pages/picture/*.md", { eager: true })
 );
 
-// 現在の作品と同じカテゴリ（SFW or NSFW）の作品のみフィルタリング
+// 同カテゴリ（SFW/NSFW）の作品のみ前後ナビ対象にする
 const filteredPosts = allPosts.filter(post => {
   const postTags = post.frontmatter.tags || [];
   const postIsNSFW = postTags.includes("R18") || postTags.includes("R18G");
@@ -62,7 +62,7 @@ const getNumberFromUrl = (url: string | undefined) => {
 };
 ---
 
-<Layout title={frontmatter.title} image={ogImage} url={ogUrl} isNSFW={isNSFW}>
+<Layout title={frontmatter.title} image={ogImage} url={ogUrl}>
     <div class="artwork-navigation">
         {prevPost && (
             <a href={prevPost.url}>← {getNumberFromUrl(prevPost.url)} {prevPost.frontmatter.title}</a>
@@ -91,11 +91,9 @@ const getNumberFromUrl = (url: string | undefined) => {
         <div class="artwork-tags">
             {frontmatter.tags.map(
                 function(tag){
-                    // NSFWページならNSFWタグへ、SFWページならSFWタグへリンク
-                    const tagPath = isNSFW ? `/nsfw-gallery/tags/${tag}/1` : `/tags/${tag}/1`;
-                    return <a href={tagPath}>#{tag}</a>
+                    return <a href={`/tags/${tag}/1`}>#{tag}</a>
                 }
-            )} 
+            )}
         </div>
     </div>
 </Layout>
