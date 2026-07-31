@@ -14,7 +14,7 @@ const THUMB_LONG_EDGE = 200;
 const OGP_WIDTH       = 1200;
 const OGP_HEIGHT      = 630;
 
-const IMAGE_EXTS = new Set(['.jpg', '.jpeg', '.png', '.webp']);
+const IMAGE_EXTS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif']);
 
 const args      = process.argv.slice(2);
 const force     = args.includes('--force');
