@@ -9,7 +9,8 @@
     "deploy": "node scripts/deploy-ftp.js",
     "ship": "npm run build && npm run deploy",
     "astro": "astro",
-    "gen": "node scripts/generate-assets.js"
+    "gen": "node scripts/generate-assets.js",
+    "new-artwork": "node scripts/new-artwork.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.12",

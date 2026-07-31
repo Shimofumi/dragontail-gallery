@@ -22,11 +22,17 @@ const thumbOnly = args.includes('--thumb');
 const ogpOnly   = args.includes('--ogp');
 const doThumb   = !ogpOnly;
 const doOgp     = !thumbOnly;
+// フラグ以外の引数はファイル名として扱う（artworks/ 内のファイル名）
+const targetFiles = args.filter(a => !a.startsWith('--'));
 
 function listImages(dir) {
-  return fs.readdirSync(dir)
+  const all = fs.readdirSync(dir)
     .filter(f => IMAGE_EXTS.has(path.extname(f).toLowerCase()))
     .sort();
+  if (targetFiles.length > 0) {
+    return all.filter(f => targetFiles.includes(f));
+  }
+  return all;
 }
 
 async function generateThumbs(files) {

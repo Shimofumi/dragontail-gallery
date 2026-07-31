@@ -164,17 +164,81 @@ npm run ship     # build + deploy を一括実行
 
 ---
 
-## コンテンツ追加の流れ
+## 新作追加フロー（Claude Code 向け手順）
 
-### 作品を追加する
+ユーザーから「新しい作品を追加したい」「artworks/ に画像を置いた」などと依頼された場合、以下の手順で対応すること。
+
+### ステップ 1 — 未登録画像を検出する
+
+```bash
+node scripts/new-artwork.js
+```
+
+出力を確認し、各グループの種別を把握する：
+- **🆕 新規作品** — メイン画像 + additionalImages 候補がまとめて表示される
+- **📎 追加画像** — 同プレフィックスの MD が既に存在するため、既存 MD の `additionalImages` に追記が必要
+
+> **判定ロジック:** MD ファイルの有無を基準にする。thumbnail/OGP の有無は判定に使わない。
+> 同プレフィックス内で末尾が `_数字` のファイルを additionalImages 候補とみなす（ヒューリスティック）。
+> 確信が持てない場合はユーザーに確認すること。
+
+### ステップ 2 — サムネイル・OGP を生成する
+
+新規作品の **メイン画像と additionalImages の両方** にサムネイルを生成する。
+OGP はメイン画像のみ（additionalImages には不要）。
+
+```bash
+# 全未生成分をまとめて補完する場合（最もシンプル）
+npm run gen
+
+# 特定ファイルのみ生成する場合
+npm run gen -- 0685kara.jpg 0685kara_2.jpg
+npm run gen -- --thumb 0685kara_2.jpg   # additionalImages は thumb のみ
+```
+
+### ステップ 3 — MD テンプレートを作成・確認する
+
+```bash
+node scripts/new-artwork.js --write
+```
+
+生成された MD を開いて以下を確認・修正する：
+
+| フィールド | 自動生成内容 | 確認ポイント |
+|-----------|------------|------------|
+| `title` | ファイル名からキャラ名を推定 | 正しい作品タイトルに修正 |
+| `tags` | 既存 MD のキャラ名部分一致で候補提示 | 不要なタグを削除、必要なものを追加。**R18/R18G は絶対に付けない（SFW サイト）** |
+| `date` | 実行日 | 新着順・RSS の基準になるため適宜調整（過去日付も可） |
+| `additionalImages` | ファイル名パターンから推定 | 実際の追加画像パスに合っているか確認 |
+
+📎 追加画像の場合は手動で既存 MD を編集して `additionalImages` に追記する。
+
+### ステップ 4 — ビルド & デプロイ
+
+```bash
+npm run ship
+```
+
+---
+
+## コンテンツ追加の流れ（手動の場合）
 
 1. `public/artworks/` に本体画像を配置
-2. `public/thumbnails/` にサムネイルを配置
-3. `public/ogp/` に OGP 画像を配置
-4. `src/pages/picture/NNNN作品名.md` を作成してフロントマターを記述
-5. `npm run ship` でビルド＆デプロイ
+2. `npm run gen` でサムネイル・OGP を生成
+3. `src/pages/picture/NNNN作品名.md` を作成してフロントマターを記述
+4. `npm run ship` でビルド＆デプロイ
 
-ファイル名の NNNN は作品通し番号（例: `0609`）。`scripts/generate-md.js` でテンプレート生成可能。
+### アセット生成スクリプト
+
+```bash
+npm run gen                      # 全未生成ファイルを補完（thumbnail + OGP）
+npm run gen -- --force           # 全件再生成（上書き）
+npm run gen -- --thumb           # サムネイルのみ
+npm run gen -- --ogp             # OGP のみ
+npm run gen -- 0685kara.jpg      # 特定ファイルのみ
+node scripts/new-artwork.js      # 未登録画像のレポート表示
+node scripts/new-artwork.js --write  # MD テンプレートを書き出す
+```
 
 ---
 
