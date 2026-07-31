@@ -101,7 +101,8 @@ function suggestTags(keyword) {
 
 // ---- レポート & MD 生成 ----
 
-const today      = new Date().toISOString().split('T')[0];
+const todayDate  = new Date().toISOString().split('T')[0];
+const today      = `${todayDate}T22:00:00+09:00`;
 const args       = process.argv.slice(2);
 const writeFiles = args.includes('--write');
 
@@ -122,8 +123,9 @@ for (const [prefix, files] of Object.entries(groups)) {
 
   // 新規作品グループ
   const mainFiles       = files.filter(f => !looksLikeAdditional(path.basename(f, path.extname(f))));
-  const additionalFiles = files.filter(f =>  looksLikeAdditional(path.basename(f, path.extname(f))));
   const mainFile        = mainFiles[0] ?? files[0]; // 候補がなければ先頭
+  // mainFile は additionals から除外する
+  const additionalFiles = files.filter(f =>  looksLikeAdditional(path.basename(f, path.extname(f))) && f !== mainFile);
   const mainBase        = path.basename(mainFile, path.extname(mainFile));
 
   // キャラ名: 先頭の数字とアンダースコアを除去
