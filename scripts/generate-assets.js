@@ -38,13 +38,15 @@ function listImages(dir) {
 async function generateThumbs(files) {
   console.log('\n📐 サムネイル生成...');
   let created = 0, skipped = 0;
+  const gifFiles = [];
   for (const file of files) {
-    const ext      = path.extname(file);
-    const basename = path.basename(file, ext);
-    const destName = `${basename}_thumb${ext}`;
+    const ext      = path.extname(file).toLowerCase();
+    const basename = path.basename(file, path.extname(file));
+    const destName = `${basename}_thumb${path.extname(file)}`;
     const src  = path.join(ARTWORKS_DIR, file);
     const dest = path.join(THUMBS_DIR, destName);
 
+    if (ext === '.gif') { gifFiles.push(file); continue; }
     if (!force && fs.existsSync(dest)) { skipped++; continue; }
 
     await sharp(src)
@@ -54,18 +56,28 @@ async function generateThumbs(files) {
     created++;
   }
   console.log(`  → 作成: ${created}件、スキップ: ${skipped}件`);
+  if (gifFiles.length > 0) {
+    console.log(`\n  ⚠️  GIF はアニメーションが失われるため自動生成をスキップしました。`);
+    console.log(`     以下のファイルのサムネイルは手動で用意してください：`);
+    for (const f of gifFiles) {
+      const base = path.basename(f, path.extname(f));
+      console.log(`       public/artworks/${f}  →  public/thumbnails/${base}_thumb.gif`);
+    }
+  }
 }
 
 async function generateOgp(files) {
   console.log('\n🖼  OGP生成 (1200×630, attention クロップ)...');
   let created = 0, skipped = 0;
+  const gifFiles = [];
   for (const file of files) {
-    const ext      = path.extname(file);
-    const basename = path.basename(file, ext);
-    const destName = `${basename}_ogp${ext}`;
+    const ext      = path.extname(file).toLowerCase();
+    const basename = path.basename(file, path.extname(file));
+    const destName = `${basename}_ogp${path.extname(file)}`;
     const src  = path.join(ARTWORKS_DIR, file);
     const dest = path.join(OGP_DIR, destName);
 
+    if (ext === '.gif') { gifFiles.push(file); continue; }
     if (!force && fs.existsSync(dest)) { skipped++; continue; }
 
     await sharp(src)
@@ -75,6 +87,14 @@ async function generateOgp(files) {
     created++;
   }
   console.log(`  → 作成: ${created}件、スキップ: ${skipped}件`);
+  if (gifFiles.length > 0) {
+    console.log(`\n  ⚠️  GIF はアニメーションが失われるため自動生成をスキップしました。`);
+    console.log(`     以下のファイルの OGP は手動で用意してください：`);
+    for (const f of gifFiles) {
+      const base = path.basename(f, path.extname(f));
+      console.log(`       public/artworks/${f}  →  public/ogp/${base}_ogp.gif`);
+    }
+  }
 }
 
 const files = listImages(ARTWORKS_DIR);
