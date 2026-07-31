@@ -8,7 +8,8 @@
     "preview": "astro preview",
     "deploy": "node scripts/deploy-ftp.js",
     "ship": "npm run build && npm run deploy",
-    "astro": "astro"
+    "astro": "astro",
+    "gen": "node scripts/generate-assets.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.12",
@@ -19,6 +20,7 @@
   "devDependencies": {
     "basic-ftp": "^5.0.5",
     "dotenv": "^17.2.3",
+    "sharp": "^0.35.3",
     "ssh2-sftp-client": "^12.0.1"
   }
 }
