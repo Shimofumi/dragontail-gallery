@@ -196,6 +196,8 @@ npm run gen -- 0685kara.jpg 0685kara_2.jpg
 npm run gen -- --thumb 0685kara_2.jpg   # additionalImages は thumb のみ
 ```
 
+> **GIF の扱い:** サムネイルはアニメーションを保ったまま長辺 200px に縮小（比率維持）。OGP はクロップせず元 GIF をそのままコピーする。
+
 ### ステップ 3 — MD テンプレートを書き出す
 
 ```bash

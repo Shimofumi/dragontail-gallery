@@ -38,7 +38,6 @@ function listImages(dir) {
 async function generateThumbs(files) {
   console.log('\n📐 サムネイル生成...');
   let created = 0, skipped = 0;
-  const gifFiles = [];
   for (const file of files) {
     const ext      = path.extname(file).toLowerCase();
     const basename = path.basename(file, path.extname(file));
@@ -46,30 +45,22 @@ async function generateThumbs(files) {
     const src  = path.join(ARTWORKS_DIR, file);
     const dest = path.join(THUMBS_DIR, destName);
 
-    if (ext === '.gif') { gifFiles.push(file); continue; }
     if (!force && fs.existsSync(dest)) { skipped++; continue; }
 
-    await sharp(src)
+    // GIF は全フレームを読み込み、アニメーション（フレーム・ディレイ・ループ）を保ったまま縮小する
+    const isGif = ext === '.gif';
+    await sharp(src, { animated: isGif })
       .resize(THUMB_LONG_EDGE, THUMB_LONG_EDGE, { fit: 'inside', withoutEnlargement: true })
       .toFile(dest);
     console.log(`  ✓ ${destName}`);
     created++;
   }
   console.log(`  → 作成: ${created}件、スキップ: ${skipped}件`);
-  if (gifFiles.length > 0) {
-    console.log(`\n  ⚠️  GIF はアニメーションが失われるため自動生成をスキップしました。`);
-    console.log(`     以下のファイルのサムネイルは手動で用意してください：`);
-    for (const f of gifFiles) {
-      const base = path.basename(f, path.extname(f));
-      console.log(`       public/artworks/${f}  →  public/thumbnails/${base}_thumb.gif`);
-    }
-  }
 }
 
 async function generateOgp(files) {
   console.log('\n🖼  OGP生成 (1200×630, attention クロップ)...');
   let created = 0, skipped = 0;
-  const gifFiles = [];
   for (const file of files) {
     const ext      = path.extname(file).toLowerCase();
     const basename = path.basename(file, path.extname(file));
@@ -77,8 +68,15 @@ async function generateOgp(files) {
     const src  = path.join(ARTWORKS_DIR, file);
     const dest = path.join(OGP_DIR, destName);
 
-    if (ext === '.gif') { gifFiles.push(file); continue; }
     if (!force && fs.existsSync(dest)) { skipped++; continue; }
+
+    // GIF はクロップするとアニメーションの見栄えが崩れるため、元画像をそのままコピーする
+    if (ext === '.gif') {
+      fs.copyFileSync(src, dest);
+      console.log(`  ✓ ${destName}（元 GIF をコピー）`);
+      created++;
+      continue;
+    }
 
     await sharp(src)
       .resize(OGP_WIDTH, OGP_HEIGHT, { fit: 'cover', position: 'attention' })
@@ -87,14 +85,6 @@ async function generateOgp(files) {
     created++;
   }
   console.log(`  → 作成: ${created}件、スキップ: ${skipped}件`);
-  if (gifFiles.length > 0) {
-    console.log(`\n  ⚠️  GIF はアニメーションが失われるため自動生成をスキップしました。`);
-    console.log(`     以下のファイルの OGP は手動で用意してください：`);
-    for (const f of gifFiles) {
-      const base = path.basename(f, path.extname(f));
-      console.log(`       public/artworks/${f}  →  public/ogp/${base}_ogp.gif`);
-    }
-  }
 }
 
 const files = listImages(ARTWORKS_DIR);
