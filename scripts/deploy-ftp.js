@@ -1,6 +1,7 @@
 import * as ftp from 'basic-ftp';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as crypto from 'crypto';
 import { config } from 'dotenv';
 
 // 環境変数読み込み
@@ -8,6 +9,19 @@ config();
 
 const LOCAL_DIR = './dist';
 const REMOTE_DIR = process.env.FTP_REMOTE_PATH || '/public_html';
+
+// テキスト系ファイル（HTML など）はサイズが同じでも中身が変わることがある
+// （例: ギャラリーの並び順だけ変わった場合）。そのため前回デプロイ時の
+// 中身のハッシュを .deploy-manifest.json に記録しておき、中身で比較する。
+// マニフェストが無い（初回・新しい PC）場合はテキスト系を全件アップロードする。
+const MANIFEST_PATH = './.deploy-manifest.json';
+const TEXT_EXTS = new Set(['.html', '.xml', '.css', '.js', '.json', '.txt', '.svg', '.webmanifest']);
+const isText = rel => TEXT_EXTS.has(path.extname(rel).toLowerCase());
+const hashFile = p => crypto.createHash('sha1').update(fs.readFileSync(p)).digest('hex');
+
+function loadManifest() {
+  try { return JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf-8')); } catch { return null; }
+}
 
 // 接続設定
 const ftpConfig = {
@@ -150,12 +164,19 @@ async function deploy() {
     
     const remoteMap = new Map(remoteFiles.map(f => [f.remote, f]));
     
+    const manifest = loadManifest();
+    if (!manifest) console.log('ℹ️  前回デプロイの記録がないため、HTML などテキスト系ファイルは全件アップロードします\n');
+    const newManifest = {};
     const toUpload = [];
     for (const local of localFiles) {
       const remote = remoteMap.get(local.remote);
-      if (!remote || remote.size !== local.size) {
-        toUpload.push(local);
+      let changed = !remote || remote.size !== local.size;
+      if (isText(local.remote)) {
+        local.hash = hashFile(local.local);
+        newManifest[local.remote] = local.hash;
+        if (!manifest || manifest[local.remote] !== local.hash) changed = true;
       }
+      if (changed) toUpload.push(local);
     }
     
     const localPaths = new Set(localFiles.map(f => f.remote));
@@ -195,6 +216,7 @@ async function deploy() {
             console.log(`  [${uploaded}/${total}] (${percent}%) - ${elapsed}s経過`);
           }
         } catch (uploadErr) {
+          delete newManifest[file.remote]; // 失敗分は次回もう一度アップロードさせる
           console.error(`  ❌ アップロード失敗: ${file.remote}`);
           console.error(`     エラー: ${uploadErr.message}`);
           
@@ -223,6 +245,7 @@ async function deploy() {
       console.log('✅ 削除完了\n');
     }
     
+    fs.writeFileSync(MANIFEST_PATH, JSON.stringify(newManifest, null, 0));
     console.log('🎉 デプロイ完了！');
     
   } catch (err) {

@@ -1,0 +1,39 @@
+---
+import Yashiojikessha from "../../layouts/Yashiojikessha.astro";
+
+// パス内のファイル名部分だけ URL エンコードする
+function enc(path: string): string {
+  return path
+    .split("/")
+    .map((seg) => encodeURIComponent(seg))
+    .join("/");
+}
+
+const BASE = "/yashiojikessha/";
+
+type Item = {
+  title: string; // 表示名（リンク文字）
+  file: string;  // public/yashiojikessha/ 内のファイル名
+  size?: string; // 容量の目安
+};
+
+const items: Item[] = [
+  { title: "ハルスベリヤ叙事詩２(委託版).7z", file: "ハルスベリヤ叙事詩２(委託版).7z", size: "約56MB" },
+];
+---
+
+<Yashiojikessha>
+  <div class="notice-box">
+    <p>このページはハルスベリヤ叙事詩２の代理公開ページです。</p>
+    <p>しもふみ（dragontail.monster）がやしおじさんより委託を受け、管理・公開しています。</p>
+  </div>
+
+  <div class="download-list">
+    {items.map((item) => (
+      <div class="download-item">
+        <a href={enc(BASE + item.file)} download>{item.title}</a>
+        {item.size && <span class="file-size">（{item.size}）</span>}
+      </div>
+    ))}
+  </div>
+</Yashiojikessha>

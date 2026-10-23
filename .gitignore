@@ -39,9 +39,14 @@ public/misc
 
 # 代理公開コンテンツ
 public/tettougafu
+public/yashiojikessha
 
 # 一時ファイル
 *.tmp
+.deploy-manifest.json
+
+# Windows 用のダブルクリック実行ファイル（ローカル専用）
+*.bat
 *.swp
 structure.txt
 
