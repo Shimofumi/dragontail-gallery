@@ -3,6 +3,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as crypto from 'crypto';
 import { config } from 'dotenv';
+import { execFileSync } from 'child_process';
+import * as readline from 'readline';
 
 // 環境変数読み込み
 config();
@@ -21,6 +23,35 @@ const hashFile = p => crypto.createHash('sha1').update(fs.readFileSync(p)).diges
 
 function loadManifest() {
   try { return JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf-8')); } catch { return null; }
+}
+
+// サーバーから消そうとしているファイルのうち、Git 管理外（.gitignore 対象）のものを返す。
+// 作品画像・配布物・代理公開ファイルなどは Git で同期されないため、
+// 「別の PC で追加したものがこの PC に無いだけ」ということがあり得る。
+// そういうファイルは削除前に必ず確認する。
+function findGitIgnored(remotePaths) {
+  if (remotePaths.length === 0) return new Set();
+  try {
+    const out = execFileSync('git', ['-c', 'core.quotepath=false', 'check-ignore', '--stdin', '-z', '--no-index'], {
+      input: remotePaths.map(p => `public/${p}`).join('\0'),
+      encoding: 'utf-8',
+    });
+    return new Set(out.split('\0').filter(Boolean).map(p => p.replace(/^public\//, '')));
+  } catch (err) {
+    if (err.status === 1) return new Set(); // 該当なし
+    console.warn('⚠️  git check-ignore に失敗したため、削除予定のファイルをすべて確認対象にします');
+    return new Set(remotePaths);
+  }
+}
+
+// y/N で確認する（対話できない環境では N 扱い）
+function askYesNo(question) {
+  if (!process.stdin.isTTY) return Promise.resolve(false);
+  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+  return new Promise(resolve => rl.question(question, ans => {
+    rl.close();
+    resolve(/^y(es)?$/i.test(ans.trim()));
+  }));
 }
 
 // 接続設定
@@ -180,7 +211,28 @@ async function deploy() {
     }
     
     const localPaths = new Set(localFiles.map(f => f.remote));
-    const toDelete = remoteFiles.filter(f => !localPaths.has(f.remote));
+    let toDelete = remoteFiles.filter(f => !localPaths.has(f.remote));
+
+    // Git 管理外のファイルをサーバーから消す場合は、アップロード前に確認する
+    const ignored = findGitIgnored(toDelete.map(f => f.remote));
+    const ignoredDeletes = toDelete.filter(f => ignored.has(f.remote));
+    if (ignoredDeletes.length > 0) {
+      console.log('⚠️  Git 管理外のファイルがサーバーから削除されようとしています。');
+      console.log('   別の PC で追加したファイルが、この PC に無いだけかもしれません。');
+      for (const f of ignoredDeletes) console.log(`  - ${f.remote}`);
+      if (!process.stdin.isTTY) console.log('  （確認できない環境のため、これらは削除しません）');
+      const ok = await askYesNo(`\nこれら ${ignoredDeletes.length} 個をサーバーから削除しますか？ [y/N] `);
+      if (ok) {
+        console.log('→ 削除します\n');
+      } else {
+        toDelete = toDelete.filter(f => !ignored.has(f.remote));
+        console.log('→ 削除せずにサーバーに残します\n');
+      }
+      // 確認を待っている間に FTP 接続が切れている可能性があるので、つなぎ直す
+      client.close();
+      await client.access(ftpConfig);
+      await client.cd(REMOTE_DIR);
+    }
     
     console.log(`📊 差分分析結果:`);
     console.log(`  アップロード: ${toUpload.length}個`);
